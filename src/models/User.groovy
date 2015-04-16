@@ -5,5 +5,5 @@ import groovy.transform.Canonical
 class User {
 
 	private Integer id,role
-	private String name,username,password
+	private String username,password
 }
