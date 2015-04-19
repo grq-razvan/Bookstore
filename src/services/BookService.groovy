@@ -47,6 +47,10 @@ class BookService {
 		XmlUtil.serialize(books, writer)
 	}
 
+	def append(Book book){
+		append([book.id.toString(), book.availableCopies.toString(), book.title, book.author, book.genre])
+	}
+
 	def delete(Integer bookId){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookChildren = books.children()
@@ -56,9 +60,18 @@ class BookService {
 		XmlUtil.serialize(books, writer)
 	}
 
+	def delete(Book book){
+		delete(book.id)
+	}
+
 	def modify(Integer originalBookId,List<String> alteredProperties){
 		delete(originalBookId)
 		append(alteredProperties)
+	}
+
+	def modify(Book originalBook, Book modifiedBook){
+		delete(originalBook)
+		append(modifiedBook)
 	}
 
 	def sellOneCopy(Integer bookId){
@@ -84,6 +97,10 @@ class BookService {
 		XmlUtil.serialize(books, writer)
 	}
 
+	def sellOneCopy(Book book){
+		sellOneCopy(book.id)
+	}
+
 	def sellMultipleCopies(Integer bookId, Integer amount){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookChildren = books.children()
@@ -107,12 +124,20 @@ class BookService {
 		XmlUtil.serialize(books, writer)
 	}
 
+	def sellMultipleCopies(Book book, Integer amount){
+		sellMultipleCopies(book.id,amount)
+	}
+
 	def restockBook(Integer bookId, Integer amount){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookNode = books.book.find{it.@id.toInteger() == bookId.intValue()}
 		bookNode.@availableCopies = String.valueOf(amount)
 		def writer = new FileWriter(PATH_TO_BOOKS)
 		XmlUtil.serialize(books, writer)
+	}
+
+	def restockBook(Book book, Integer amount){
+		restockBook(book.id,amount)
 	}
 
 	def restock(Integer amount){
