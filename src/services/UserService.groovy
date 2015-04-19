@@ -12,6 +12,8 @@ class UserService {
 			usersXmlFile = new FileInputStream(PATH_TO_USERS)
 		}
 	
+	
+	
 		def parse(){
 			users = new XmlSlurper().parse(usersXmlFile)
 			def userList = new ArrayList<User>()
