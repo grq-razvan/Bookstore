@@ -1,8 +1,14 @@
 package controllers
 
+import services.BookService
+
 class BookController {
 
-	def bookService
+	private BookService bookService
+	private GenerateBookReportService
 
-	
+	def show(){
+		bookService = new BookService()
+		bookService.parse()
+	}
 }
