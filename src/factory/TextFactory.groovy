@@ -8,8 +8,8 @@ import services.BookService
 class TextFactory extends AbstractFactory {
 
 	public static TextReport build(){
-		TextReport result = generateTextReport()
-		return result
+
+		return  generateTextReport()
 	}
 
 	private static TextReport generateTextReport(){

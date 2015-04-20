@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.TextReport;
+import models.XmlReport;
 import factory.TextFactory;
+import factory.XMLFactory;
 
 public class EntryPoint {
 
@@ -19,9 +21,11 @@ public class EntryPoint {
 
 		// new BookService().restockBook(1,16);
 		// new BookService().restock(100);
-	//	System.out.println(new BookService().getBooksOutOfStock());
+		// System.out.println(new BookService().getBooksOutOfStock());
 		TextReport report = TextFactory.build();
 		report.createReportFile();
+		XmlReport reporrt = XMLFactory.build();
+		reporrt.createReportFile();
 
 	}
 

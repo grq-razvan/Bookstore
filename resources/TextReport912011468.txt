@@ -1,4 +1,0 @@
-0	The Art of War	Sun Tzu
-
-1	Groovy in action	Manning
-

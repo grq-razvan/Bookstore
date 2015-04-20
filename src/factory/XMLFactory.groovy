@@ -8,16 +8,15 @@ import services.BookService
 class XMLFactory extends AbstractFactory {
 
 	public static XmlReport build(){
-		XmlReport report= generateXmlReport()
+		XmlReport report = generateXMLReport()
 		return report
 	}
 	private static XmlReport generateXMLReport(){
 		BookService xmlParser = new BookService()
 		AbstractReport report = new XmlReport()
-		String path = "resources/"+this.getClass().getSimpleName()+this.hashCode()+".xml"
-		for(Book book : xmlParser.getBooksOutOfStock()){
+		for(Book book in xmlParser.getBooksOutOfStock()){
 			report.addData(book)
 		}
 		return report
-	};
+	}
 }
