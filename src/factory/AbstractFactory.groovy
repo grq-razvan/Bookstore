@@ -1,7 +1,9 @@
 package factory
 
+import models.AbstractReport
+
 abstract class AbstractFactory {
 
-	abstract protected void build();
+	abstract protected AbstractReport build();
 	
 }

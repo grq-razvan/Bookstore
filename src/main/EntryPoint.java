@@ -3,8 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.User;
-import services.UserService;
+import services.BookService;
 
 public class EntryPoint {
 
@@ -19,7 +18,7 @@ public class EntryPoint {
 		
 		//new BookService().restockBook(1,16);
 		//new BookService().restock(100);
-		System.out.println(new UserService().isAdmin((User)	new UserService().match("grq-stfn","password2")));
+		System.out.println(new BookService().getBooksOutOfStock());
 		
 	}
 

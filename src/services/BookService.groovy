@@ -10,11 +10,18 @@ class BookService {
 	private def books
 	private def bookList
 	private def bookXMLFile
-	private def booksWithNoCopies
+	
+
+	private static final Integer EMPTY_STOCK = 0
+
+	private static final Integer BOOK_ID=0
+	private static final Integer BOOK_COPIES=1
+	private static final Integer BOOK_TITLE=2
+	private static final Integer BOOK_AUTHOR=3
+	private static final Integer BOOK_GENRE=4
 
 	BookService(){
 		bookXMLFile = new FileInputStream(PATH_TO_BOOKS)
-		booksWithNoCopies = new HashSet<Book>()
 	}
 
 	def parse(){
@@ -37,11 +44,11 @@ class BookService {
 		books = new XmlSlurper().parse(bookXMLFile)
 		books.appendNode{
 			book(
-					author: properties.get(3),
-					availableCopies:properties.get(1),
-					genre: properties.get(4),
-					id: properties.get(0),
-					title:properties.get(2))
+					author: properties.get(BOOK_AUTHOR),
+					availableCopies:properties.get(BOOK_COPIES),
+					genre: properties.get(BOOK_GENRE),
+					id: properties.get(BOOK_ID),
+					title:properties.get(BOOK_TITLE))
 		}
 		def writer = new FileWriter(PATH_TO_BOOKS)
 		XmlUtil.serialize(books, writer)
@@ -80,19 +87,10 @@ class BookService {
 		def bookNode = bookChildren.find { it.@id.toInteger() == bookId.intValue() }
 		def currentAvailableCopies = bookNode.@availableCopies.toInteger()
 		currentAvailableCopies--
+		if(currentAvailableCopies<=EMPTY_STOCK){
+			bookNode.@availableCopies = String.valueOf(EMPTY_STOCK)
+		}
 		bookNode.@availableCopies = String.valueOf(currentAvailableCopies)
-		if(currentAvailableCopies<0){
-			bookNode.@availableCopies = "0"
-		}
-		if(bookNode.@availableCopies.toInteger()==0){
-			Book newEntry = new Book()
-			newEntry.id = bookNode.@id.toInteger()
-			newEntry.availableCopies=0
-			newEntry.author = bookNode.@author
-			newEntry.title = bookNode.@title
-			newEntry.genre = bookNode.@genre
-			booksWithNoCopies.add(newEntry)
-		}
 		def writer = new FileWriter(PATH_TO_BOOKS)
 		XmlUtil.serialize(books, writer)
 	}
@@ -107,19 +105,11 @@ class BookService {
 		def bookNode = bookChildren.find { it.@id.toInteger() == bookId.intValue() }
 		def currentAvailableCopies = bookNode.@availableCopies.toInteger()
 		currentAvailableCopies-=amount
-
+		if(currentAvailableCopies<=EMPTY_STOCK){
+			bookNode.@availableCopies = String.valueOf(EMPTY_STOCK)
+		}
 		bookNode.@availableCopies = String.valueOf(currentAvailableCopies)
-		if(currentAvailableCopies<0){
-			bookNode.@availableCopies = "0"
-		}
-		if(bookNode.@availableCopies.toInteger()==0){
-			booksWithNoCopies.add(new Book(id:bookNode.@id.toInteger(),
-			availableCopies:currentAvailableCopies,
-			author:bookNode.@author,
-			title:bookNode.@title,
-			genre:bookNode.@genre)
-			)
-		}
+		
 		def writer = new FileWriter(PATH_TO_BOOKS)
 		XmlUtil.serialize(books, writer)
 	}
@@ -141,15 +131,31 @@ class BookService {
 	}
 
 	def restock(Integer amount){
-		books = new XmlParser().parse(bookXMLFile)
 		def bookList = parse()
 		for(Book b: bookList){
 			b.availableCopies+=amount
-			delete(b.id)
-			append([String.valueOf(b.id), String.valueOf(b.availableCopies), b.genre, b.author, b.title])
+			modify(b.id,[String.valueOf(b.id), String.valueOf(b.availableCopies), b.genre, b.author, b.title])
 		}
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+	}
+
+	def restockBooksWithNoCopies(Integer amount){
+		def bookList = parse()
+		for(Book b in bookList){
+			if(b.availableCopies==EMPTY_STOCK){
+				modify(b.id,[String.valueOf(b.id), String.valueOf(b.availableCopies), b.genre, b.author, b.title])
+			}
+		}
+	}
+	
+	def getBooksOutOfStock(){
+		def bookList = parse()
+		List<Book> outOfStockBooks = new ArrayList<Book>()
+		for(Book b in bookList){
+			if(b.availableCopies==EMPTY_STOCK){
+				outOfStockBooks.add(b)
+			}
+		}
+		return outOfStockBooks
 	}
 
 	private boolean isValidNumberOfCopies(Integer bookId){

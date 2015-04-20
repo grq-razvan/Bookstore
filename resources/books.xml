@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><books>
-  <book author="Sun Tzu" availableCopies="320" genre="Historical" id="0" title="The Art of War"/>
-  <book author="Manning" availableCopies="316" genre="Geek" id="1" title="Groovy in action"/>
+  <book author="Sun Tzu" availableCopies="0" genre="Historical" id="0" title="The Art of War"/>
+  <book author="Manning" availableCopies="0" genre="Geek" id="1" title="Groovy in action"/>
 </books>

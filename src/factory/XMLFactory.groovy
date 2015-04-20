@@ -1,7 +1,16 @@
 package factory
 
+import models.AbstractReport
+
 class XMLFactory extends AbstractFactory {
 
-	void build(){}
-	private void generateXMLReport(){};
+	AbstractReport build(){
+		
+	}
+	private void generateXMLReport(){
+		
+		
+	};
+
+	
 }
