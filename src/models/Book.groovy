@@ -10,6 +10,7 @@ class Book {
 		
 	@Override
 	String toString(){
-		"BID:${id}\nTitle:${title}\nAuthor:${author}\nGenre:${genre}\nCopies:${availableCopies}\n"
+		//"BID:${id}\nTitle:${title}\nAuthor:${author}\nGenre:${genre}\nCopies:${availableCopies}\n"
+		"${id}\t${title}\t${author}"
 	}
 }

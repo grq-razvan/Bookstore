@@ -3,7 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-import services.BookService;
+import models.TextReport;
+import factory.TextFactory;
 
 public class EntryPoint {
 
@@ -15,11 +16,13 @@ public class EntryPoint {
 		bookProperties.add("Groovy in action");
 		bookProperties.add("Manning");
 		bookProperties.add("Geek");
-		
-		//new BookService().restockBook(1,16);
-		//new BookService().restock(100);
-		System.out.println(new BookService().getBooksOutOfStock());
-		
+
+		// new BookService().restockBook(1,16);
+		// new BookService().restock(100);
+	//	System.out.println(new BookService().getBooksOutOfStock());
+		TextReport report = TextFactory.build();
+		report.createReportFile();
+
 	}
 
 }

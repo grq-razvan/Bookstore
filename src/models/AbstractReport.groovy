@@ -1,5 +1,7 @@
 package models
 
-class AbstractReport {
+abstract class AbstractReport {
 
+	
+	
 }

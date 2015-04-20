@@ -2,22 +2,22 @@ package factory
 
 import models.AbstractReport
 import models.Book
+import models.TextReport
 import services.BookService
 
 class TextFactory extends AbstractFactory {
 
-		AbstractReport build(){
-			return null; 
-		};
-		
-		private String generateTextReport(){
-			BookService xmlParser = new BookService()
-			ArrayList<Book> books = xmlParser.getBooksOutOfStock()
-			StringBuilder result = new StringBuilder("ID\t\tTITLE\t\t\t\tAUTHOR\t\t\t\n")
-			for(Book book in books){
-					String bookData = book.id.intValue() + "\t\t" + book.title +"\t"+ book.author
-					result.append(bookData+"\n")
-			}
-			return result.toString()
-		};
+	public static TextReport build(){
+		TextReport result = generateTextReport()
+		return result
+	}
+
+	private static TextReport generateTextReport(){
+		BookService xmlParser = new BookService()
+		AbstractReport report = new TextReport()
+		for(Book book in xmlParser.getBooksOutOfStock()) {
+			report.addData(book.toString())
+		}
+		return report
+	};
 }
