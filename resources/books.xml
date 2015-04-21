@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><books>
   <book author="Sun Tzu" availableCopies="0" genre="Historical" id="0" title="The Art of War"/>
   <book author="Manning" availableCopies="0" genre="Geek" id="1" title="Groovy in action"/>
+  <book author="Man2ning" availableCopies="5" genre="Gee3k" id="2" title="Gr1oovy in action"/>
 </books>

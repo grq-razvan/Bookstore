@@ -8,8 +8,7 @@ import services.BookService
 class XMLFactory extends AbstractFactory {
 
 	public static XmlReport build(){
-		XmlReport report = generateXMLReport()
-		return report
+		return generateXMLReport()
 	}
 	private static XmlReport generateXMLReport(){
 		BookService xmlParser = new BookService()

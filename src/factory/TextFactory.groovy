@@ -7,6 +7,7 @@ import services.BookService
 
 class TextFactory extends AbstractFactory {
 
+
 	public static TextReport build(){
 
 		return  generateTextReport()

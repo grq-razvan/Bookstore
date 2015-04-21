@@ -1,6 +1,5 @@
 package services
 
-import groovy.xml.StreamingMarkupBuilder
 import groovy.xml.XmlUtil
 import models.Book
 
@@ -10,7 +9,7 @@ class BookService {
 	private def books
 	private def bookList
 	private def bookXMLFile
-	
+
 
 	private static final Integer EMPTY_STOCK = 0
 
@@ -109,7 +108,7 @@ class BookService {
 			bookNode.@availableCopies = String.valueOf(EMPTY_STOCK)
 		}
 		bookNode.@availableCopies = String.valueOf(currentAvailableCopies)
-		
+
 		def writer = new FileWriter(PATH_TO_BOOKS)
 		XmlUtil.serialize(books, writer)
 	}
@@ -146,7 +145,7 @@ class BookService {
 			}
 		}
 	}
-	
+
 	def getBooksOutOfStock(){
 		def bookList = parse()
 		List<Book> outOfStockBooks = new ArrayList<Book>()
@@ -166,5 +165,66 @@ class BookService {
 			it.@id.toInteger()==bookId.intValue()
 		}
 		return nodeToChange.@availableCopies.toInteger()>0
+	}
+
+	def findById(String inputId){
+		def list = parse()
+		for(Book book : list){
+			if(book.id==Integer.valueOf(inputId){ return book
+			} }
+	}
+
+	def findAllByGenre(String genre){
+		def list = parse()
+		def returnList = new ArrayList<Book>()
+		for(Book book : list){
+			if(book.genre==genre){
+				returnList.add(book)
+			}
+		}
+		return returnList
+	}
+
+	def findAllByTitle(String title){
+		def list = parse()
+		def returnList = new ArrayList<>()
+		for(Book book in list){
+			if(book.title==title){
+				returnList.add(book)
+			}
+		}
+		return returnList
+	}
+
+	def findAllByAuthor(String author){
+		def list = parse()
+		def returnList = new ArrayList<>()
+		for(Book book in list){
+			if(book.author==author){
+				returnList.add(book)
+			}
+		}
+		return returnList
+	}
+
+	def findAllWithMoreCopiesThan(String numberOfCopies){
+		def list = parse()
+		def returnList = new ArrayList<>()
+		for(Book book in list){
+			if(book.availableCopies>=Integer.valueOf(numberOfCopies){
+				returnList.add(book)
+			}
+		}
+		return returnList
+	}
+	def findAllWithLessCopiesThan(String numberOfCopies){
+		def list = parse()
+		def returnList = new ArrayList<>()
+		for(Book book in list){
+			if(book.availableCopies<Integer.valueOf(numberOfCopies){
+				returnList.add(book)
+			}
+		}
+		return returnList
 	}
 }
