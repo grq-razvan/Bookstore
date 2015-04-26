@@ -1,0 +1,4 @@
+<books type='soldOut'>
+  <book id='0' title='The Art of War' author='Sun Tzu' />
+  <book id='1' title='Groovy in action' author='Manning' />
+</books>

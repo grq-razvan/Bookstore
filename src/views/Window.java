@@ -16,7 +16,6 @@ public abstract class Window {
 		panel.setLayout(null);
 	}
 
-	protected abstract void addListeners();
 
 	public JPanel getPanel() {
 		return panel;

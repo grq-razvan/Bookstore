@@ -6,7 +6,7 @@ import java.util.List;
 import services.BookService;
 import services.GenerateBookReportService;
 import services.UserService;
-import views.LoginView;
+import views.BookListView;
 import views.frame.Frame;
 
 public class EntryPoint {
@@ -20,10 +20,6 @@ public class EntryPoint {
 		bookProperties.add("Manning");
 		bookProperties.add("Geek");
 
-		// new BookService().restockBook(1,16);
-		// new BookService().restock(100);
-		// System.out.println(new BookService().getBooksOutOfStock());
-
 		GenerateBookReportService serv = new GenerateBookReportService();
 		serv.generateReport("XML format report");
 		BookService b = new BookService();
@@ -32,6 +28,6 @@ public class EntryPoint {
 		UserService u = new UserService();
 		System.out.println(u.getList());
 		
-		new Frame().getFrame().add(new LoginView().getPanel());
+		new Frame().getFrame().add(new BookListView().getPanel());
 	}
 }

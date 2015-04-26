@@ -1,13 +1,15 @@
 package controllers
 
+import services.GenerateBookReportService
 import services.UserService
 
 class UserController {
 
-	UserService userService
+	private static UserService userService
+	private static GenerateBookReportService bookReportService
+
+		
 	
-	void show(){
-		userService = new UserService()
-		userService.parse()
-	}
+	
+	
 }

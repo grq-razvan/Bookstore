@@ -13,10 +13,5 @@ public class MainView extends Window implements View {
 		panel.add(helloMessage);
 	}
 
-	@Override
-	protected void addListeners() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

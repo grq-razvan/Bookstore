@@ -14,10 +14,10 @@ class BookService {
 	private static final Integer EMPTY_STOCK = 0
 
 	private static final Integer BOOK_ID=0
-	private static final Integer BOOK_COPIES=1
-	private static final Integer BOOK_TITLE=2
-	private static final Integer BOOK_AUTHOR=3
-	private static final Integer BOOK_GENRE=4
+	private static final Integer BOOK_COPIES=4
+	private static final Integer BOOK_TITLE=1
+	private static final Integer BOOK_AUTHOR=2
+	private static final Integer BOOK_GENRE=3
 
 	BookService(){
 		bookXMLFile = new FileInputStream(PATH_TO_BOOKS)
@@ -35,7 +35,6 @@ class BookService {
 			book.genre=node.@genre
 			bookList.add(book)
 		}
-		//bookList.each { println it }
 		return bookList;
 	}
 
@@ -157,6 +156,10 @@ class BookService {
 		return outOfStockBooks
 	}
 
+	def getBooks(){
+		parse()
+	}
+
 	private boolean isValidNumberOfCopies(Integer bookId){
 		bookXMLFile = new FileInputStream(PATH_TO_BOOKS)
 		books = new XmlParser().parse(bookXMLFile)
@@ -170,8 +173,10 @@ class BookService {
 	def findById(String inputId){
 		def list = parse()
 		for(Book book : list){
-			if(book.id.intValue()==Integer.valueOf(inputId)){ return book
-			} }
+			if(book.id.intValue()==Integer.valueOf(inputId)){
+				return book
+			}
+		}
 	}
 
 	def findAllByGenre(String genre){
@@ -200,7 +205,7 @@ class BookService {
 		def list = parse()
 		def returnList = new ArrayList<>()
 		for(Book book in list){
-			if(book.author==author){
+			if(book.author.equals(author)){
 				returnList.add(book)
 			}
 		}
@@ -211,7 +216,7 @@ class BookService {
 		def list = parse()
 		def returnList = new ArrayList<>()
 		for(Book book in list){
-			if(book.availableCopies>=Integer.valueOf(numberOfCopies){
+			if(book.availableCopies.intValue()>=Integer.valueOf(numberOfCopies){
 				returnList.add(book)
 			}
 		}
@@ -221,7 +226,7 @@ class BookService {
 		def list = parse()
 		def returnList = new ArrayList<>()
 		for(Book book in list){
-			if(book.availableCopies<Integer.valueOf(numberOfCopies){
+			if(book.availableCopies.intValue()<Integer.valueOf(numberOfCopies){
 				returnList.add(book)
 			}
 		}

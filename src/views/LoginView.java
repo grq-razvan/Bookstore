@@ -1,19 +1,13 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import services.UserValidator;
-import views.frame.Frame;
-import views.menu.Menu;
+import controllers.LoginController;
 
 public class LoginView extends Window implements View {
 
@@ -37,64 +31,46 @@ public class LoginView extends Window implements View {
 		submit.setBounds(635, 325, 85, 30);
 		exit.setBounds(745, 325, 80, 30);
 
-		addListeners();
-
 		panel.add(usernameField);
 		panel.add(usernameLabel);
 		panel.add(passwordField);
 		panel.add(passwordLabel);
 		panel.add(submit);
 		panel.add(exit);
-	}
 
-	@Override
-	protected void addListeners() {
-		// TODO Auto-generated method stub
-		exit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.exit(0);
-			}
-		});
-
-		submit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String username = usernameField.getText();
-				char[] password = passwordField.getPassword();
-				Container container = Frame.getFrame().getContentPane();
-				if (UserValidator.isUserValid(username, password)) {
-					if (UserValidator.isUserAdmin(username, password)) {
-						Frame.getFrame().setJMenuBar(
-								new Menu(true).getMenuBar());
-					} else {
-						Frame.getFrame().setJMenuBar(
-								new Menu(false).getMenuBar());
-					}
-					container.removeAll();
-					container.repaint();
-					container.revalidate();
-					container.add(new MainView(username).getPanel());
-					container.repaint();
-					container.revalidate();
-
-				} else {
-					JOptionPane
-							.showMessageDialog(null,
-									"Invalid username/password combination.Please try again!");
-					usernameField.setText("");
-					passwordField.setText("");
-					container.repaint();
-					container.revalidate();
-
-				}
-			}
-		});
+		LoginController.loginAs(this);
 
 	}
 
+	public JTextField getUsernameField() {
+		return usernameField;
+	}
+
+	public void setUsernameField(JTextField usernameField) {
+		this.usernameField = usernameField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+	public JButton getSubmit() {
+		return submit;
+	}
+
+	public void setSubmit(JButton submit) {
+		this.submit = submit;
+	}
+
+	public JButton getExit() {
+		return exit;
+	}
+
+	public void setExit(JButton exit) {
+		this.exit = exit;
+	}
 }
