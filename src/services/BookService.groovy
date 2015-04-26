@@ -35,7 +35,7 @@ class BookService {
 			book.genre=node.@genre
 			bookList.add(book)
 		}
-		bookList.each { println it }
+		//bookList.each { println it }
 		return bookList;
 	}
 
@@ -170,7 +170,7 @@ class BookService {
 	def findById(String inputId){
 		def list = parse()
 		for(Book book : list){
-			if(book.id==Integer.valueOf(inputId){ return book
+			if(book.id.intValue()==Integer.valueOf(inputId)){ return book
 			} }
 	}
 

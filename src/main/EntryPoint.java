@@ -3,7 +3,11 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
+import services.BookService;
 import services.GenerateBookReportService;
+import services.UserService;
+import views.LoginView;
+import views.frame.Frame;
 
 public class EntryPoint {
 
@@ -22,6 +26,12 @@ public class EntryPoint {
 
 		GenerateBookReportService serv = new GenerateBookReportService();
 		serv.generateReport("XML format report");
-
+		BookService b = new BookService();
+		System.out.println(b.findById("0"));
+		
+		UserService u = new UserService();
+		System.out.println(u.getList());
+		
+		new Frame().getFrame().add(new LoginView().getPanel());
 	}
 }

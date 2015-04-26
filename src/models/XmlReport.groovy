@@ -24,7 +24,6 @@ class XmlReport extends AbstractReport {
 			}
 		}
 
-
 		PrintWriter pw = new PrintWriter(new File('resources/'+this.getClass().getSimpleName()+"-"+this.hashCode()+".xml"))
 		pw.write(sw.toString())
 		pw.close()

@@ -9,12 +9,14 @@ class UserService {
 	private static final PATH_TO_USERS = "resources/users.xml"
 	def users
 	def usersXmlFile
+	List<User> list
 
 	UserService(){
 		usersXmlFile = new FileInputStream(PATH_TO_USERS)
+		fillList()
 	}
 
-	def parse(){
+	private def parse(){
 		users = new XmlSlurper().parse(usersXmlFile)
 		def userList = new ArrayList<User>()
 		users.user.each { node ->
@@ -25,8 +27,12 @@ class UserService {
 			user.password=node.@password
 			userList.add(user)
 		}
-		userList.each { println it }
+		//userList.each { println it }
 		return userList;
+	}
+
+	private void fillList(){
+		list = parse();
 	}
 
 	def append(List<String> properties){
@@ -69,23 +75,32 @@ class UserService {
 		append(modifiedUser)
 	}
 
-	User match(String user,String pass){
-		users = new XmlParser().parse(usersXmlFile)
-		def userNode = users.user.find{it.@username==user && it.@password==pass}
-		if(userNode==null)
-			return null
-		else{
-			new User(
-					id: userNode.@id.toInteger(),
-					role: userNode.@role.toInteger(),
-					username: userNode.@username,
-					password: userNode.@password)
+	User match(String username,String pass){
+		for(User user in list){
+			if(user.username==username && user.password==pass){
+				return user
+			}
 		}
+		return null
+	}
+
+	boolean isUserValid(String user,String pass){
+		for(User u in list){
+			if (u.username==user && u.password==pass){
+				return true;
+			}
+		}
+		return false;
 	}
 
 
 	def isAdmin(User user){
 		def matcher = match(user.username,user.password)
+		matcher.role==1?true:false
+	}
+
+	def isAdmin(String user,String pass){
+		def matcher = match(user,pass)
 		matcher.role==1?true:false
 	}
 }
