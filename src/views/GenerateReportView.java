@@ -12,8 +12,13 @@ public class GenerateReportView extends Window {
 		text = new JButton("Text report");
 		xml = new JButton("XML report");
 		
+		xml.setBounds(310,200,100,60);
+		text.setBounds(510,200,100,60);
+		
 		panel.add(text);
 		panel.add(xml);
+		
+		
 		
 		UserController.report(this);
 	}

@@ -16,6 +16,7 @@ class XMLFactory extends AbstractFactory {
 		for(Book book in xmlParser.getBooksOutOfStock()){
 			report.addData(book)
 		}
+
 		return report
 	}
 }

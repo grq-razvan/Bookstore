@@ -9,7 +9,7 @@ class BookService {
 	private def books
 	private def bookList
 	private def bookXMLFile
-
+	private def writer
 
 	private static final Integer EMPTY_STOCK = 0
 
@@ -35,6 +35,7 @@ class BookService {
 			book.genre=node.@genre
 			bookList.add(book)
 		}
+
 		return bookList;
 	}
 
@@ -48,8 +49,22 @@ class BookService {
 					id: properties.get(BOOK_ID),
 					title:properties.get(BOOK_TITLE))
 		}
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def append(Book book){
@@ -59,19 +74,62 @@ class BookService {
 	def delete(Integer bookId){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookChildren = books.children()
-		def bookNode = bookChildren.find { it.@id.toInteger() == bookId.intValue() }
+		def bookNode = bookChildren.find {
+			it.@id.toInteger() == bookId.intValue()
+		}
 		bookChildren.remove(bookNode)
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def delete(Book book){
 		delete(book.id)
 	}
 
-	def modify(Integer originalBookId,List<String> alteredProperties){
-		delete(originalBookId)
-		append(alteredProperties)
+	def modify(Integer originalBookId,List<String> properties){
+		books = new XmlParser().parse(bookXMLFile)
+		def bookChildren = books.children()
+		def bookNode = bookChildren.find {
+			it.@id.toInteger() == originalBookId.intValue()
+		}
+		bookChildren.remove(bookNode)
+		def newBook = new Node(books,'book',
+				[
+					id			   :properties.get(BOOK_ID),
+					author		   :properties.get(BOOK_AUTHOR),
+					title		   :properties.get(BOOK_TITLE),
+					genre		   :properties.get(BOOK_GENRE),
+					availableCopies:properties.get(BOOK_COPIES)
+				]
+				)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def modify(Book originalBook, Book modifiedBook){
@@ -82,15 +140,31 @@ class BookService {
 	def sellOneCopy(Integer bookId){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookChildren = books.children()
-		def bookNode = bookChildren.find { it.@id.toInteger() == bookId.intValue() }
+		def bookNode = bookChildren.find {
+			it.@id.toInteger() == bookId.intValue()
+		}
 		def currentAvailableCopies = bookNode.@availableCopies.toInteger()
 		currentAvailableCopies--
 		if(currentAvailableCopies<=EMPTY_STOCK){
 			bookNode.@availableCopies = String.valueOf(EMPTY_STOCK)
 		}
 		bookNode.@availableCopies = String.valueOf(currentAvailableCopies)
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def sellOneCopy(Book book){
@@ -100,16 +174,31 @@ class BookService {
 	def sellMultipleCopies(Integer bookId, Integer amount){
 		books = new XmlParser().parse(bookXMLFile)
 		def bookChildren = books.children()
-		def bookNode = bookChildren.find { it.@id.toInteger() == bookId.intValue() }
+		def bookNode = bookChildren.find {
+			it.@id.toInteger() == bookId.intValue()
+		}
 		def currentAvailableCopies = bookNode.@availableCopies.toInteger()
 		currentAvailableCopies-=amount
 		if(currentAvailableCopies<=EMPTY_STOCK){
 			bookNode.@availableCopies = String.valueOf(EMPTY_STOCK)
 		}
 		bookNode.@availableCopies = String.valueOf(currentAvailableCopies)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
 
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def sellMultipleCopies(Book book, Integer amount){
@@ -118,10 +207,26 @@ class BookService {
 
 	def restockBook(Integer bookId, Integer amount){
 		books = new XmlParser().parse(bookXMLFile)
-		def bookNode = books.book.find{it.@id.toInteger() == bookId.intValue()}
+		def bookNode = books.book.find{
+			it.@id.toInteger() == bookId.intValue()
+		}
 		bookNode.@availableCopies = String.valueOf(amount)
-		def writer = new FileWriter(PATH_TO_BOOKS)
-		XmlUtil.serialize(books, writer)
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def restockBook(Book book, Integer amount){
@@ -129,10 +234,26 @@ class BookService {
 	}
 
 	def restock(Integer amount){
-		def bookList = parse()
-		for(Book b: bookList){
-			b.availableCopies+=amount
-			modify(b.id,[String.valueOf(b.id), String.valueOf(b.availableCopies), b.genre, b.author, b.title])
+		books = new XmlSlurper().parse(bookXMLFile)
+		books.book.each { node ->
+			Integer copies = node.@availableCopies.toInteger() + amount;
+			node.@availableCopies = String.valueOf(copies)
+		}
+		String result = XmlUtil.serialize(books)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_BOOKS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
 		}
 	}
 

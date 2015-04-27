@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><books>
-  <book author="Sun Tzu" availableCopies="0" genre="Historical" id="0" title="The Art of War"/>
-  <book author="Manning" availableCopies="0" genre="Geek" id="1" title="Groovy in action"/>
-  <book author="Man2ning" availableCopies="5" genre="Gee3k" id="2" title="Gr1oovy in action"/>
+  <book author="Random Author" availableCopies="25" genre="Random Genre 2" id="1" title="Random Title 2"/>
+  <book author="Manning" availableCopies="15" genre="CompSci" id="3" title="Groovy in action"/>
+  <book author="Sun Tzu" availableCopies="7" genre="Historical" id="4" title="The Art of War"/>
+  <book author="SomeRoman" availableCopies="155" genre="Historical" id="2" title="Alexander the Great"/>
 </books>

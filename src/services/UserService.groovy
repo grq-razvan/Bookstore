@@ -1,19 +1,25 @@
 package services
 
+import groovy.xml.XmlUtil;
+
 import java.util.List;
 
 import models.User
 
 class UserService {
 
-	private static final PATH_TO_USERS = "resources/users.xml"
+	private static final String PATH_TO_USERS = "resources/users.xml"
+	private static final Integer USER_ID = 0;
+	private static final Integer USER_PASS = 2;
+	private static final Integer USER_ROLE = 3;
+	private static final Integer USER_NAME = 1;
 	def users
-	def usersXmlFile
-	List<User> list
+	def usersXmlFile// = new FileInputStream(PATH_TO_USERS)
+	
 
 	UserService(){
 		usersXmlFile = new FileInputStream(PATH_TO_USERS)
-		fillList()
+		
 	}
 
 	private def parse(){
@@ -31,21 +37,35 @@ class UserService {
 		return userList;
 	}
 
-	private void fillList(){
-		list = parse();
+	public List<User> getUsers(){
+		 parse()
 	}
 
 	def append(List<String> properties){
 		users = new XmlSlurper().parse(usersXmlFile)
 		users.appendNode{
-			user( id : properties.get(0),
-			password : properties.get(1),
-			role : properties.get(2),
-			username : properties.get(3)
+			user( id       : properties.get(USER_ID),
+				  password : properties.get(USER_PASS),
+				  role     : properties.get(USER_ROLE),
+				  username : properties.get(USER_NAME)
 			)
 		}
-		def writer = new FileWriter(PATH_TO_USERS)
-		XmlUtil.serialize(users, writer)
+		String result = XmlUtil.serialize(users)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_USERS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def append(User user){
@@ -57,8 +77,22 @@ class UserService {
 		def usersChildren = users.children()
 		def usersNode = usersChildren.find { it.@id.toInteger() == userId.intValue() }
 		usersChildren.remove(usersNode)
-		def writer = new FileWriter(PATH_TO_USERS)
-		XmlUtil.serialize(users, writer)
+		String result = XmlUtil.serialize(users)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_USERS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def delete(User user){
@@ -66,16 +100,42 @@ class UserService {
 	}
 
 	def modify(Integer originalUserId,List<String> alteredProperties){
-		delete(originalUserId)
-		append(alteredProperties)
+		users = new XmlParser().parse(usersXmlFile)
+		def usersChildren = users.children()
+		def usersNode = usersChildren.find { it.@id.toInteger() == originalUserId.intValue() }
+		usersChildren.remove(usersNode)
+		def newUser = new Node(users,'user',
+				[
+					id      : properties.get(USER_ID),
+					password: properties.get(USER_PASS),
+					role 	: properties.get(USER_ROLE),
+					username: properties.get(USER_NAME)
+				]
+				)
+		String result = XmlUtil.serialize(users)
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(PATH_TO_USERS), "utf-8"));
+			writer.write(result);
+		} catch (IOException ex) {
+			// report
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+				//ignore}
+			}
+		}
 	}
 
 	def modify(User originalUser, User modifiedUser){
-		delete(originalUser)
-		append(modifiedUser)
+		//modify(originalUser.id,)
 	}
 
 	User match(String username,String pass){
+		def list = parse()
 		for(User user in list){
 			if(user.username==username && user.password==pass){
 				return user
@@ -85,6 +145,7 @@ class UserService {
 	}
 
 	boolean isUserValid(String user,String pass){
+		def list = parse()
 		for(User u in list){
 			if (u.username==user && u.password==pass){
 				return true;

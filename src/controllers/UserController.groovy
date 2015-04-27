@@ -35,7 +35,7 @@ class UserController {
 					public void actionPerformed(ActionEvent e) {
 						if(processed==false){
 							userService = new UserService();
-							List<User> booksToList = userService.list;
+							List<User> booksToList = userService.getUsers();
 							JTable table = userView.getTable();
 							DefaultTableModel model = (DefaultTableModel) table.getModel()
 							for(User user in booksToList){

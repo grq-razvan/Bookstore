@@ -12,6 +12,7 @@ import views.BookRestockView;
 import views.BookSellView;
 import views.BookUpdateView;
 import views.GenerateReportView;
+import views.LoginView;
 import views.UserAddView;
 import views.UserDeleteView;
 import views.UserListView;
@@ -23,11 +24,24 @@ public class MenuController {
 
 	public static void link(Menu menu) {
 		menu.getExit().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.exit(0);
+			}
+		});
+		
+		menu.getLogoff().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Container container = Frame.getFrame().getContentPane();
+				container.removeAll();
+				container.add(new LoginView().getPanel());
+				container.repaint();
+				container.revalidate();
 			}
 		});
 
@@ -37,7 +51,7 @@ public class MenuController {
 				// TODO Auto-generated method stub
 				Container container = Frame.getFrame().getContentPane();
 				container.removeAll();
-				container.add(new BookFindView().getPanel());
+				container.add(new BookFindView(Menu.isAdmin).getPanel());
 				container.repaint();
 				container.revalidate();
 			}
@@ -50,7 +64,7 @@ public class MenuController {
 				// TODO Auto-generated method stub
 				Container container = Frame.getFrame().getContentPane();
 				container.removeAll();
-				container.add(new BookFindView().getPanel());
+				container.add(new BookFindView(Menu.isAdmin).getPanel());
 				container.repaint();
 				container.revalidate();
 			}
@@ -63,7 +77,7 @@ public class MenuController {
 				// TODO Auto-generated method stub
 				Container container = Frame.getFrame().getContentPane();
 				container.removeAll();
-				container.add(new BookFindView().getPanel());
+				container.add(new BookFindView(Menu.isAdmin).getPanel());
 				container.repaint();
 				container.revalidate();
 			}
@@ -76,7 +90,7 @@ public class MenuController {
 				// TODO Auto-generated method stub
 				Container container = Frame.getFrame().getContentPane();
 				container.removeAll();
-				container.add(new BookFindView().getPanel());
+				container.add(new BookFindView(Menu.isAdmin).getPanel());
 				container.repaint();
 				container.revalidate();
 			}
@@ -89,7 +103,7 @@ public class MenuController {
 				// TODO Auto-generated method stub
 				Container container = Frame.getFrame().getContentPane();
 				container.removeAll();
-				container.add(new BookFindView().getPanel());
+				container.add(new BookFindView(Menu.isAdmin).getPanel());
 				container.repaint();
 				container.revalidate();
 			}

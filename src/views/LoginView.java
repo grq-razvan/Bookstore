@@ -73,4 +73,5 @@ public class LoginView extends Window implements View {
 	public void setExit(JButton exit) {
 		this.exit = exit;
 	}
+	
 }

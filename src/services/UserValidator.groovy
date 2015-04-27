@@ -4,7 +4,7 @@ import models.User
 
 class UserValidator {
 
-	static List<?> users = new UserService().list
+	static List<?> users = new UserService().getUsers()
 
 	public static boolean isUserValid(String username, char[] password){
 		if(!isUserNameValid(username)||!isPasswordValid(password)){
@@ -36,8 +36,6 @@ class UserValidator {
 				}else{
 					return false
 				}
-			}else{
-				return false
 			}
 		}
 	}

@@ -15,15 +15,18 @@ class XmlReport extends AbstractReport {
 
 		def sw = new StringWriter()
 		def builder = new MarkupBuilder(sw)
-		builder.books(type: "soldOut"){
-			(0..rows.size()-1).each{ n->
-				book(
-						id: String.valueOf(rows.get(n).id),
-						title: rows.get(n).title,
-						author: rows.get(n).author)
+		if(rows.size()==0){
+			builder.books(type: "soldOut"){ content(type: "No books") }
+		}else{
+			builder.books(type: "soldOut"){
+				(0..rows.size()-1).each{ n->
+					book(
+							id: String.valueOf(rows.get(n).id),
+							title: rows.get(n).title,
+							author: rows.get(n).author)
+				}
 			}
 		}
-
 		PrintWriter pw = new PrintWriter(new File('resources/'+this.getClass().getSimpleName()+"-"+this.hashCode()+".xml"))
 		pw.write(sw.toString())
 		pw.close()

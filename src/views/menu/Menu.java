@@ -9,12 +9,12 @@ import controllers.MenuController;
 public class Menu {
 
 	private JMenuBar menuBar;
-	private JMenu employee, admin, find, exit;
+	private JMenu employee, admin, find,close;
 	private JMenuItem employeeAddBook, employeeDeleteBook, employeeUpdateBook,
 			employeeSellBook, adminAddEmployee, adminDeleteEmployee,
 			adminUpdateEmployee, adminRestockSupply, adminRestockBook,
 			adminGenerateReport, findById, findByAuthor, findByTitle,
-			findAllBooks, findAllEmployees, findLess, findMore;
+			findAllBooks, findAllEmployees, findLess, findMore,exit,logoff;
 
 	private static final String ADD = "Add";
 	private static final String UPDATE = "Update";
@@ -28,6 +28,10 @@ public class Menu {
 	private static final String MORE = "Find books with more copies that..";
 	private static final String RESTOCK = "Restock book supply";
 	private static final String SELL = "Sell books";
+	private static final String EXIT = "Exit";
+	private static final String LOG_OUT = "Log out";
+	private static final String CLOSE = "Close";
+	public static boolean isAdmin;
 
 	public Menu(boolean isUserAdmin) {
 		super();
@@ -35,7 +39,9 @@ public class Menu {
 		this.employee = new JMenu();
 		this.admin = new JMenu();
 		this.find = new JMenu();
-		this.exit = new JMenu();
+		this.close = new JMenu();
+		this.exit = new JMenuItem();
+		this.logoff = new JMenuItem();
 		this.employeeAddBook = new JMenuItem();
 		this.employeeDeleteBook = new JMenuItem();
 		this.employeeUpdateBook = new JMenuItem();
@@ -56,10 +62,15 @@ public class Menu {
 		menuBar.add(employee);
 		menuBar.add(admin);
 		menuBar.add(find);
-		menuBar.add(exit);
+		menuBar.add(close);
 
-		exit.setText("Exit");
-
+		close.setText(CLOSE);
+		exit.setText(EXIT);
+		logoff.setText(LOG_OUT);
+		
+		close.add(exit);
+		close.add(logoff);
+		
 		employee.setText("Books");
 		employee.add(employeeAddBook);
 		employeeAddBook.setText(ADD);
@@ -86,7 +97,7 @@ public class Menu {
 		find.add(findAllBooks);
 		findAllBooks.setText(LIST);
 		find.add(findAllEmployees);
-		findAllEmployees.setText(LIST);
+		findAllEmployees.setText(LIST+" users");
 		find.add(findByAuthor);
 		findByAuthor.setText(AUTHOR);
 		find.add(findById);
@@ -110,6 +121,7 @@ public class Menu {
 			admin.setEnabled(false);
 			findAllEmployees.setEnabled(false);
 		}
+		isAdmin=isUserAdmin;
 		MenuController.link(this);
 	}
 
@@ -145,11 +157,11 @@ public class Menu {
 		this.find = find;
 	}
 
-	public JMenu getExit() {
+	public JMenuItem getExit() {
 		return exit;
 	}
 
-	public void setExit(JMenu exit) {
+	public void setExit(JMenuItem exit) {
 		this.exit = exit;
 	}
 
@@ -287,6 +299,22 @@ public class Menu {
 
 	public void setFindMore(JMenuItem findMore) {
 		this.findMore = findMore;
+	}
+
+	public JMenu getClose() {
+		return close;
+	}
+
+	public void setClose(JMenu close) {
+		this.close = close;
+	}
+
+	public JMenuItem getLogoff() {
+		return logoff;
+	}
+
+	public void setLogoff(JMenuItem logoff) {
+		this.logoff = logoff;
 	}
 
 }

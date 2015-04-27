@@ -16,6 +16,9 @@ class TextReport extends AbstractReport{
 	void createReportFile(){
 		File output = new File("resources/"+ this.getClass().getSimpleName()+"-"+this.hashCode()+".txt")
 		PrintWriter writer = new PrintWriter(output)
+		if(rows.size()==0){
+			writer.println("No books with no copies")
+		}
 		for(String data in rows){
 			writer.println(data)
 		}

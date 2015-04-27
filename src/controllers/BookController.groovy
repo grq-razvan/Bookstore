@@ -155,7 +155,7 @@ class BookController {
 					@Override
 					public void actionPerformed(ActionEvent e){
 						bookService = new BookService();
-						bookService.restock(Integer.valueOf(id.getText()), Integer.valueOf(amount.getText()))
+						bookService.restockBook(Integer.valueOf(id.getText()), Integer.valueOf(amount.getText()))
 						id.setText("")
 						amount.setText("")
 					}
@@ -200,112 +200,129 @@ class BookController {
 		JButton title = bookView.findTitle
 		JButton genre = bookView.findGenre
 		JButton less = bookView.findLess
+		JButton clear = bookView.clear
 		JButton more = bookView.findMore
 		JTextField search = bookView.searchBox
 
-		boolean processedId=false;
+
 		id.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						if(processedId==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findById(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedId=true;
-							}
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findById(search.getText());
+
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
 						}
+						table.repaint()
+						table.revalidate()
 					}
 				})
-		boolean processedTitle=false;
+
 		title.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						if(processedTitle==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findAllByTitle(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedTitle=true;
-							}
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findAllByTitle(search.getText());
+
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
 						}
+						table.repaint()
+						table.revalidate()
 					}
 				})
 
-		boolean processedGenre = false;
+
 		genre.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						if(processedGenre==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findAllByGenre(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedGenre=true;
-							}
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findAllByGenre(search.getText());
+
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
 						}
-					}
-				})
-		boolean processedLess = false;
-		less.addActionListener(new ActionListener(){
-					@Override
-					public void actionPerformed(ActionEvent e){
-						if(processedLess==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findAllWithLessCopiesThan(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedLess=true;
-							}
-						}
-					}
-				})
-		boolean processedMore = false;
-		more.addActionListener(new ActionListener(){
-					@Override
-					public void actionPerformed(ActionEvent e){
-						if(processedMore==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findAllWithMoreCopiesThan(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedMore=true;
-							}
-						}
+						table.repaint()
+						table.revalidate()
 					}
 				})
 
-		boolean processedAuthor = false;
+		less.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findAllWithLessCopiesThan(search.getText());
+
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
+						}
+						table.repaint()
+						table.revalidate()
+					}
+				})
+
+		more.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findAllWithMoreCopiesThan(search.getText());
+
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
+						}
+						table.repaint()
+						table.revalidate()
+					}
+				})
+
+
 		author.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						if(processedAuthor==false){
-							bookService = new BookService();
-							List<Book> booksToList = bookService.findAllByAuthor(search.getText());
-							JTable table = bookView.getTable();
-							DefaultTableModel model = (DefaultTableModel) table.getModel()
-							for(Book book in booksToList){
-								Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
-								model.addRow(row);
-								processedAuthor=true;
-							}
+						JTable table = bookView.getTable();
+						DefaultTableModel model = (DefaultTableModel) table.getModel()
+
+						bookService = new BookService();
+						List<Book> booksToList = bookService.findAllByAuthor(search.getText());
+						for(Book book in booksToList){
+							Object[] row = [book.id.toString(), book.title, book.author, book.genre, book.availableCopies.toString()]
+							model.addRow(row);
 						}
+						table.repaint()
+						table.revalidate()
 					}
 				})
+
+		clear.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						JTable table = bookView.getTable()
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.getDataVector().clear()
+						table.revalidate()
+						table.repaint()
+					}
+				});
 	}
 }
