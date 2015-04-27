@@ -1,88 +1,85 @@
 package views;
 
-import java.awt.Color;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import controllers.BookController;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class BookRestockView extends Window {
-	private JButton restock, restockAll, clear;
-	private JTextField bookId,amount;
+    private JButton restock, restockAll, clear;
+    private JTextField bookId, amount;
 
-	public BookRestockView() {
-		restock = new JButton("Restock");
-		restockAll = new JButton("Restock all");
-		clear = new JButton("Clear");
-		bookId = new JTextField();
-		amount = new JTextField();
-		
-		JLabel operation = new JLabel("<html><font size=5 color='white'>Restock books</font></html>");
-		JLabel idLabel = new JLabel("ID: ");
-		JLabel amountLabel = new JLabel("Amount: ");
-		idLabel.setForeground(Color.WHITE);
-		idLabel.setBounds(400, 160, 50, 30);
-		bookId.setBounds(460,160,120,30);
-		amountLabel.setForeground(Color.WHITE);
-		amountLabel.setBounds(400,200,50,30);
-		amount.setBounds(460,200,120,30);
-		
-		restock.setBounds(390, 250, 90, 30);
-		restockAll.setBounds(442,285,100,30);
-		clear.setBounds(505,250,80,30);
-		operation.setBounds(420,90,140,50);
+    public BookRestockView() {
+        restock = new JButton("Restock");
+        restockAll = new JButton("Restock all");
+        clear = new JButton("Clear");
+        bookId = new JTextField();
+        amount = new JTextField();
 
-		panel.add(restock);
-		panel.add(restockAll);
-		panel.add(amount);
-		panel.add(clear);
-		panel.add(bookId);
-		panel.add(operation);
-		panel.add(amountLabel);
-		panel.add(idLabel);
+        JLabel operation = new JLabel("<html><font size=5 color='white'>Restock books</font></html>");
+        JLabel idLabel = new JLabel("ID: ");
+        JLabel amountLabel = new JLabel("Amount: ");
+        idLabel.setForeground(Color.WHITE);
+        idLabel.setBounds(400, 160, 50, 30);
+        bookId.setBounds(460, 160, 120, 30);
+        amountLabel.setForeground(Color.WHITE);
+        amountLabel.setBounds(400, 200, 50, 30);
+        amount.setBounds(460, 200, 120, 30);
 
-		BookController.restock(this);
-	}
+        restock.setBounds(390, 250, 90, 30);
+        restockAll.setBounds(442, 285, 100, 30);
+        clear.setBounds(505, 250, 80, 30);
+        operation.setBounds(420, 90, 140, 50);
 
-	public JButton getRestock() {
-		return restock;
-	}
+        panel.add(restock);
+        panel.add(restockAll);
+        panel.add(amount);
+        panel.add(clear);
+        panel.add(bookId);
+        panel.add(operation);
+        panel.add(amountLabel);
+        panel.add(idLabel);
 
-	public void setRestock(JButton restock) {
-		this.restock = restock;
-	}
+        BookController.restock(this);
+    }
 
-	public JButton getRestockAll() {
-		return restockAll;
-	}
+    public JButton getRestock() {
+        return restock;
+    }
 
-	public void setRestockAll(JButton restockAll) {
-		this.restockAll = restockAll;
-	}
+    public void setRestock(JButton restock) {
+        this.restock = restock;
+    }
 
-	public JButton getClear() {
-		return clear;
-	}
+    public JButton getRestockAll() {
+        return restockAll;
+    }
 
-	public void setClear(JButton clear) {
-		this.clear = clear;
-	}
+    public void setRestockAll(JButton restockAll) {
+        this.restockAll = restockAll;
+    }
 
-	public JTextField getBookId() {
-		return bookId;
-	}
+    public JButton getClear() {
+        return clear;
+    }
 
-	public void setBookId(JTextField bookId) {
-		this.bookId = bookId;
-	}
+    public void setClear(JButton clear) {
+        this.clear = clear;
+    }
 
-	public JTextField getAmount() {
-		return amount;
-	}
+    public JTextField getBookId() {
+        return bookId;
+    }
 
-	public void setAmount(JTextField amount) {
-		this.amount = amount;
-	}
+    public void setBookId(JTextField bookId) {
+        this.bookId = bookId;
+    }
+
+    public JTextField getAmount() {
+        return amount;
+    }
+
+    public void setAmount(JTextField amount) {
+        this.amount = amount;
+    }
 }

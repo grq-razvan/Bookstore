@@ -1,4 +1,3 @@
 <books type='soldOut'>
     <book id='1' title='Random Title 2' author='Random Author'/>
-    <book id='3' title='Groovy in action' author='Manning'/>
 </books>

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><users>
-  <user password="password1" role="0" id="0" username="grq-rzvn"/>
-  <user password="password2" role="1" id="1" username="grq-stfn"/>
-  <user id="2" password="password3" role="1" username="grq-test"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user password="password1" role="0" id="0" username="grq-rzvn"/>
+    <user password="password2" role="1" id="1" username="grq-stfn"/>
+    <user id="2" password="password3" role="1" username="grq-test"/>
 </users>

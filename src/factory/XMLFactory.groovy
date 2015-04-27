@@ -7,16 +7,17 @@ import services.BookService
 
 class XMLFactory extends AbstractFactory {
 
-	public static XmlReport build(){
-		return generateXMLReport()
-	}
-	private static XmlReport generateXMLReport(){
-		BookService xmlParser = new BookService()
-		AbstractReport report = new XmlReport()
-		for(Book book in xmlParser.getBooksOutOfStock()){
-			report.addData(book)
-		}
+    public static AbstractReport build() {
+        return generateXMLReport() as XmlReport
+    }
 
-		return report
-	}
+    private static XmlReport generateXMLReport() {
+        BookService xmlParser = new BookService()
+        AbstractReport report = new XmlReport()
+        for (Book book in xmlParser.getBooksOutOfStock()) {
+            report.addData(book)
+        }
+
+        return report
+    }
 }
