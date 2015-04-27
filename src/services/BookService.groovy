@@ -174,7 +174,7 @@ class BookService {
 		def list = parse()
 		for(Book book : list){
 			if(book.id.intValue()==Integer.valueOf(inputId)){
-				return book
+				return [book]
 			}
 		}
 	}
@@ -205,7 +205,7 @@ class BookService {
 		def list = parse()
 		def returnList = new ArrayList<>()
 		for(Book book in list){
-			if(book.author.equals(author)){
+			if(book.author==author){
 				returnList.add(book)
 			}
 		}

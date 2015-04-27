@@ -19,6 +19,8 @@ public class BookAddView extends Window {
 		bookGenre = new JTextField();
 		bookCopies = new JTextField();
 	
+		//submit.setBounds(100,100,80,30);
+		
 		panel.add(submit);
 		panel.add(clear);
 		panel.add(bookId);

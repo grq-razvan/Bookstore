@@ -5,7 +5,7 @@ import factory.XMLFactory
 
 class GenerateBookReportService {
 
-	private static final String XML="XML format report",TXT="Text format report"
+	public static final String XML="XML format report",TXT="Text format report"
 	def report
 
 	def generateReport(String type){
